@@ -12,10 +12,13 @@ function initRaytracer () {
 
 	/* Get context & size canvas */
 
-	canvas        = document.querySelector('canvas');
-	canvas.width  = ASPECTRATIO[0];
-	canvas.height = ASPECTRATIO[1];
-	context       = canvas.getContext('2d');
+	canvas                = document.querySelector('canvas');
+	canvas.width          = ASPECTRATIO[0];
+	canvas.height         = ASPECTRATIO[1];
+	canvas.style.position = 'absolute';
+	canvas.style.top      = innerHeight * 0.5 - ASPECTRATIO[1] * 0.5;
+	canvas.style.left     = innerWidth * 0.5 - ASPECTRATIO[0] * 0.5;
+	context               = canvas.getContext('2d');
 
 	/* Create renderer */
 
@@ -32,7 +35,7 @@ function initRaytracer () {
 
 	/* Set perspective */
 
-	pMatrix = mat4.perspective(mat4.create(), Math.PI / 3, ASPECTRATIO[0] / ASPECTRATIO[1], 0.0, 100.0);
+	pMatrix = mat4.perspective(mat4.create(), Math.PI / 3, ASPECTRATIO[0] / ASPECTRATIO[1], 50.0, 100.0);
 	renderer.setPerspectiveMatrix(pMatrix);
 
 	/* Start render loop */
@@ -41,13 +44,14 @@ function initRaytracer () {
 }
 
 var translation;
-var rotation         = 0.01;
+var rotation         = 0.4;
 var tempPos          = vec3.create();
 var trianglePosition = vec3.set(tempPos, 0, 0, -10.0);
 function animate () {
 	rotation += 0.01;
 	cube.identity();
-	cube.translate(0.1, 0, -10.0 + (Math.sin(Date.now() * .001) * 5.0));
+	// cube.translate(0, 0, -4.3);
+	cube.translate(0, 0, -10.0 + (Math.sin(Date.now() * .001) * 5.0));
 	cube.rotate(rotation, 0, 1, 1);
 }
 

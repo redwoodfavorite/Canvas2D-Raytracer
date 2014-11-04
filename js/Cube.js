@@ -7,61 +7,145 @@ class Cube {
 		this.translation  = vec3.create();
 
 		this.triangles = [
-	    	[
-				// Front face
-				vec3.set(vec3.create(), -1.0, -1.0,  1.0),
-				vec3.set(vec3.create(),  1.0, -1.0,  1.0),
-				vec3.set(vec3.create(),  1.0,  1.0,  1.0),
-			],[
-				vec3.set(vec3.create(), -1.0, -1.0,  1.0),
-				vec3.set(vec3.create(), -1.0,  1.0,  1.0),
-				vec3.set(vec3.create(),  1.0,  1.0,  1.0)
-			],[
-				// Back face
-				vec3.set(vec3.create(), -1.0, -1.0, -1.0),
-				vec3.set(vec3.create(), -1.0,  1.0, -1.0),
-				vec3.set(vec3.create(),  1.0,  1.0, -1.0),
-			],[
-				vec3.set(vec3.create(), -1.0, -1.0, -1.0),
-				vec3.set(vec3.create(),  1.0,  1.0, -1.0),
-				vec3.set(vec3.create(),  1.0, -1.0, -1.0),
-			],[
-				// Top face
-				vec3.set(vec3.create(), -1.0,  1.0, -1.0),
-				vec3.set(vec3.create(), -1.0,  1.0,  1.0),
-				vec3.set(vec3.create(),  1.0,  1.0,  1.0),
-			],[
-				vec3.set(vec3.create(), -1.0,  1.0, -1.0),
-				vec3.set(vec3.create(),  1.0,  1.0,  1.0),
-				vec3.set(vec3.create(),  1.0,  1.0, -1.0),
-			],[
-				// Bottom face
-				vec3.set(vec3.create(), -1.0, -1.0, -1.0),
-				vec3.set(vec3.create(),  1.0, -1.0, -1.0),
-				vec3.set(vec3.create(),  1.0, -1.0,  1.0),
-			],[
-				vec3.set(vec3.create(), -1.0, -1.0, -1.0),
-				vec3.set(vec3.create(),  1.0, -1.0,  1.0),
-				vec3.set(vec3.create(), -1.0, -1.0,  1.0),
-			],[
-				// Right face
-				vec3.set(vec3.create(),  1.0, -1.0, -1.0),
-				vec3.set(vec3.create(),  1.0,  1.0, -1.0),
-				vec3.set(vec3.create(),  1.0,  1.0,  1.0),
-			],[
-				vec3.set(vec3.create(),  1.0, -1.0, -1.0),
-				vec3.set(vec3.create(),  1.0,  1.0,  1.0),
-				vec3.set(vec3.create(),  1.0, -1.0,  1.0),
-			],[   
-	      		// Left face
-				vec3.set(vec3.create(), -1.0, -1.0, -1.0),
-				vec3.set(vec3.create(), -1.0, -1.0,  1.0),
-				vec3.set(vec3.create(), -1.0,  1.0,  1.0),
-			],[
-				vec3.set(vec3.create(), -1.0, -1.0, -1.0),
-				vec3.set(vec3.create(), -1.0,  1.0,  1.0),
-				vec3.set(vec3.create(), -1.0,  1.0, -1.0),
-			]
+	    	{
+	    		vertices: [
+					// Front face
+					vec3.set(vec3.create(), -1.0, -1.0,  1.0),
+					vec3.set(vec3.create(),  1.0, -1.0,  1.0),
+					vec3.set(vec3.create(),  1.0,  1.0,  1.0),
+				],
+				colors: [
+					vec3.set(vec3.create(), 0, 0, 0),
+					vec3.set(vec3.create(), 255, 255, 255),
+					vec3.set(vec3.create(), 255, 255, 255),
+				]
+			},{
+				vertices: [
+					vec3.set(vec3.create(), -1.0, -1.0,  1.0),
+					vec3.set(vec3.create(), -1.0,  1.0,  1.0),
+					vec3.set(vec3.create(),  1.0,  1.0,  1.0)
+				],
+				colors: [
+					vec3.set(vec3.create(), 0, 0, 0),
+					vec3.set(vec3.create(), 255, 255, 255),
+					vec3.set(vec3.create(), 255, 255, 255),
+				]
+			},{
+				vertices: [
+					// Back face
+					vec3.set(vec3.create(), -1.0, -1.0, -1.0),
+					vec3.set(vec3.create(), -1.0,  1.0, -1.0),
+					vec3.set(vec3.create(),  1.0,  1.0, -1.0),
+				],
+				colors: [
+					vec3.set(vec3.create(), 255,   0,   0),
+					vec3.set(vec3.create(), 0  , 255,   0),
+					vec3.set(vec3.create(), 0  ,   0, 255),
+				]
+			},{
+				vertices: [
+					vec3.set(vec3.create(), -1.0, -1.0, -1.0),
+					vec3.set(vec3.create(),  1.0,  1.0, -1.0),
+					vec3.set(vec3.create(),  1.0, -1.0, -1.0),
+				],
+				colors: [
+					vec3.set(vec3.create(), 255,   0,   0),
+					vec3.set(vec3.create(),  0  ,   0, 255),
+					vec3.set(vec3.create(),  255, 255, 255),
+				]
+			},{
+				vertices: [
+					// Top face
+					vec3.set(vec3.create(), -1.0,  1.0, -1.0),
+					vec3.set(vec3.create(), -1.0,  1.0,  1.0),
+					vec3.set(vec3.create(),  1.0,  1.0,  1.0),
+				],
+				colors: [
+					vec3.set(vec3.create(), 255,   0,   0),
+					vec3.set(vec3.create(), 0  , 255,   0),
+					vec3.set(vec3.create(), 0  ,   0, 255),
+				]
+			},{
+				vertices: [
+					vec3.set(vec3.create(), -1.0,  1.0, -1.0),
+					vec3.set(vec3.create(),  1.0,  1.0,  1.0),
+					vec3.set(vec3.create(),  1.0,  1.0, -1.0),
+				],
+				colors: [
+					vec3.set(vec3.create(), 255,   0,   0),
+					vec3.set(vec3.create(),  0  ,   0, 255),
+					vec3.set(vec3.create(),  255, 255, 255),
+				]
+			},{
+				vertices: [
+					// Bottom face
+					vec3.set(vec3.create(), -1.0, -1.0, -1.0),
+					vec3.set(vec3.create(),  1.0, -1.0, -1.0),
+					vec3.set(vec3.create(),  1.0, -1.0,  1.0),
+				],
+				colors: [
+					vec3.set(vec3.create(), 255,   0,   0),
+					vec3.set(vec3.create(), 0  , 255,   0),
+					vec3.set(vec3.create(), 0  ,   0, 255),
+				]
+			},{
+				vertices: [
+					vec3.set(vec3.create(), -1.0, -1.0, -1.0),
+					vec3.set(vec3.create(),  1.0, -1.0,  1.0),
+					vec3.set(vec3.create(), -1.0, -1.0,  1.0),
+				],
+				colors: [
+					vec3.set(vec3.create(), 255,   0,   0),
+					vec3.set(vec3.create(),  0  ,   0, 255),
+					vec3.set(vec3.create(), 255, 255, 255),
+				]
+			},{
+				vertices: [
+					// Right face
+					vec3.set(vec3.create(),  1.0, -1.0, -1.0),
+					vec3.set(vec3.create(),  1.0,  1.0, -1.0),
+					vec3.set(vec3.create(),  1.0,  1.0,  1.0),
+				],
+				colors: [
+					vec3.set(vec3.create(), 255,   0,   0),
+					vec3.set(vec3.create(), 0  , 255,   0),
+					vec3.set(vec3.create(), 0  ,   0, 255),
+				]
+			},{
+				vertices: [
+					vec3.set(vec3.create(),  1.0, -1.0, -1.0),
+					vec3.set(vec3.create(),  1.0,  1.0,  1.0),
+					vec3.set(vec3.create(),  1.0, -1.0,  1.0),
+				],
+				colors: [
+					vec3.set(vec3.create(), 255,   0,   0),
+					vec3.set(vec3.create(),  0  ,   0, 255),
+					vec3.set(vec3.create(),  255, 255, 255),
+				]
+			},{
+				vertices: [   
+		      		// Left face
+					vec3.set(vec3.create(), -1.0, -1.0, -1.0),
+					vec3.set(vec3.create(), -1.0, -1.0,  1.0),
+					vec3.set(vec3.create(), -1.0,  1.0,  1.0),
+				],
+				colors: [
+					vec3.set(vec3.create(), 255,   0,   0),
+					vec3.set(vec3.create(), 0  , 255,   0),
+					vec3.set(vec3.create(), 0  ,   0, 255),
+				]
+			},{
+				vertices: [
+					vec3.set(vec3.create(), -1.0, -1.0, -1.0),
+					vec3.set(vec3.create(), -1.0,  1.0,  1.0),
+					vec3.set(vec3.create(), -1.0,  1.0, -1.0),
+				],
+				colors: [
+					vec3.set(vec3.create(), 255,   0,   0),
+					vec3.set(vec3.create(), 0  ,   0, 255),
+					vec3.set(vec3.create(), 255, 255, 255),
+				]
+			}
 		];
 	}
 
