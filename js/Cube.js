@@ -15,9 +15,9 @@ class Cube {
 					vec3.set(vec3.create(),  1.0,  1.0,  1.0),
 				],
 				colors: [
-					vec3.set(vec3.create(), 0, 0, 0),
 					vec3.set(vec3.create(), 255, 255, 255),
 					vec3.set(vec3.create(), 255, 255, 255),
+					vec3.set(vec3.create(), 0, 255, 255),
 				]
 			},{
 				vertices: [
@@ -26,9 +26,9 @@ class Cube {
 					vec3.set(vec3.create(),  1.0,  1.0,  1.0)
 				],
 				colors: [
-					vec3.set(vec3.create(), 0, 0, 0),
 					vec3.set(vec3.create(), 255, 255, 255),
 					vec3.set(vec3.create(), 255, 255, 255),
+					vec3.set(vec3.create(), 0, 255, 255),
 				]
 			},{
 				vertices: [
@@ -144,6 +144,148 @@ class Cube {
 					vec3.set(vec3.create(), 255,   0,   0),
 					vec3.set(vec3.create(), 0  ,   0, 255),
 					vec3.set(vec3.create(), 255, 255, 255),
+				]
+			}
+		];
+
+		this.triangles = [
+	    	{
+	    		vertices: [
+					// Front face
+					vec3.set(vec3.create(), -1.0, -1.0,  1.0),
+					vec3.set(vec3.create(),  1.0, -1.0,  1.0),
+					vec3.set(vec3.create(),  1.0,  1.0,  1.0),
+				],
+				normals: [
+					vec3.set(vec3.create(), 0, 0, 1),
+					vec3.set(vec3.create(), 0, 0, 1),
+					vec3.set(vec3.create(), 0, 0, 1),
+				]
+			},{
+				vertices: [
+					vec3.set(vec3.create(), -1.0, -1.0,  1.0),
+					vec3.set(vec3.create(), -1.0,  1.0,  1.0),
+					vec3.set(vec3.create(),  1.0,  1.0,  1.0)
+				],
+				normals: [
+					vec3.set(vec3.create(), 0, 0, 1),
+					vec3.set(vec3.create(), 0, 0, 1),
+					vec3.set(vec3.create(), 0, 0, 1),
+				]
+			},{
+				vertices: [
+					// Back face
+					vec3.set(vec3.create(), -1.0, -1.0, -1.0),
+					vec3.set(vec3.create(), -1.0,  1.0, -1.0),
+					vec3.set(vec3.create(),  1.0,  1.0, -1.0),
+				],
+				normals: [
+					vec3.set(vec3.create(), 0, 0, -1),
+					vec3.set(vec3.create(), 0, 0, -1),
+					vec3.set(vec3.create(), 0, 0, -1),
+				]
+			},{
+				vertices: [
+					vec3.set(vec3.create(), -1.0, -1.0, -1.0),
+					vec3.set(vec3.create(),  1.0,  1.0, -1.0),
+					vec3.set(vec3.create(),  1.0, -1.0, -1.0),
+				],
+				normals: [
+					vec3.set(vec3.create(), 0, 0, -1),
+					vec3.set(vec3.create(), 0, 0, -1),
+					vec3.set(vec3.create(), 0, 0, -1),
+				]
+			},{
+				vertices: [
+					// Top face
+					vec3.set(vec3.create(), -1.0,  1.0, -1.0),
+					vec3.set(vec3.create(), -1.0,  1.0,  1.0),
+					vec3.set(vec3.create(),  1.0,  1.0,  1.0),
+				],
+				normals: [
+					vec3.set(vec3.create(), 0, 1, 0),
+					vec3.set(vec3.create(), 0, 1, 0),
+					vec3.set(vec3.create(), 0, 1, 0),
+				]
+			},{
+				vertices: [
+					vec3.set(vec3.create(), -1.0,  1.0, -1.0),
+					vec3.set(vec3.create(),  1.0,  1.0,  1.0),
+					vec3.set(vec3.create(),  1.0,  1.0, -1.0),
+				],
+				normals: [
+					vec3.set(vec3.create(), 0, 1, 0),
+					vec3.set(vec3.create(), 0, 1, 0),
+					vec3.set(vec3.create(), 0, 1, 0),
+				]
+			},{
+				vertices: [
+					// Bottom face
+					vec3.set(vec3.create(), -1.0, -1.0, -1.0),
+					vec3.set(vec3.create(),  1.0, -1.0, -1.0),
+					vec3.set(vec3.create(),  1.0, -1.0,  1.0),
+				],
+				normals: [
+					vec3.set(vec3.create(), 0, -1, 0),
+					vec3.set(vec3.create(), 0, -1, 0),
+					vec3.set(vec3.create(), 0, -1, 0),
+				]
+			},{
+				vertices: [
+					vec3.set(vec3.create(), -1.0, -1.0, -1.0),
+					vec3.set(vec3.create(),  1.0, -1.0,  1.0),
+					vec3.set(vec3.create(), -1.0, -1.0,  1.0),
+				],
+				normals: [
+					vec3.set(vec3.create(), 0, -1, 0),
+					vec3.set(vec3.create(), 0, -1, 0),
+					vec3.set(vec3.create(), 0, -1, 0),
+				]
+			},{
+				vertices: [
+					// Right face
+					vec3.set(vec3.create(),  1.0, -1.0, -1.0),
+					vec3.set(vec3.create(),  1.0,  1.0, -1.0),
+					vec3.set(vec3.create(),  1.0,  1.0,  1.0),
+				],
+				normals: [
+					vec3.set(vec3.create(), 1, 0, 0),
+					vec3.set(vec3.create(), 1, 0, 0),
+					vec3.set(vec3.create(), 1, 0, 0),
+				]
+			},{
+				vertices: [
+					vec3.set(vec3.create(),  1.0, -1.0, -1.0),
+					vec3.set(vec3.create(),  1.0,  1.0,  1.0),
+					vec3.set(vec3.create(),  1.0, -1.0,  1.0),
+				],
+				normals: [
+					vec3.set(vec3.create(), 1, 0, 0),
+					vec3.set(vec3.create(), 1, 0, 0),
+					vec3.set(vec3.create(), 1, 0, 0),
+				]
+			},{
+				vertices: [   
+		      		// Left face
+					vec3.set(vec3.create(), -1.0, -1.0, -1.0),
+					vec3.set(vec3.create(), -1.0, -1.0,  1.0),
+					vec3.set(vec3.create(), -1.0,  1.0,  1.0),
+				],
+				normals: [
+					vec3.set(vec3.create(), -1, 0, 0),
+					vec3.set(vec3.create(), -1, 0, 0),
+					vec3.set(vec3.create(), -1, 0, 0),
+				]
+			},{
+				vertices: [
+					vec3.set(vec3.create(), -1.0, -1.0, -1.0),
+					vec3.set(vec3.create(), -1.0,  1.0,  1.0),
+					vec3.set(vec3.create(), -1.0,  1.0, -1.0),
+				],
+				normals: [
+					vec3.set(vec3.create(), -1, 0, 0),
+					vec3.set(vec3.create(), -1, 0, 0),
+					vec3.set(vec3.create(), -1, 0, 0),
 				]
 			}
 		];

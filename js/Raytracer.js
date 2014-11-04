@@ -38,6 +38,11 @@ function initRaytracer () {
 	pMatrix = mat4.perspective(mat4.create(), Math.PI / 3, ASPECTRATIO[0] / ASPECTRATIO[1], 50.0, 100.0);
 	renderer.setPerspectiveMatrix(pMatrix);
 
+	/* Add lights */
+
+	renderer.addDirectionalLight(0, 0, 1);
+	renderer.setAmbientColor(100, 100, 100);
+
 	/* Start render loop */
 
 	tick();

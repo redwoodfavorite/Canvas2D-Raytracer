@@ -14,11 +14,14 @@ class Renderer {
 		this.pixelPos                   = [];
 		this.transformedVertexPositions = [];
 		this.attribs                    = [];
+		this.directionalLights          = [];
+		this.transformedNormals         = [];
 
 		// temporaries
-		this.multiplied     = mat4.create();
-		this.distanceVector = vec3.create();
-		this.scaled         = [
+		this.withPerspective = mat4.create();
+		this.normalMatrix    = mat3.create();
+		this.distanceVector  = vec3.create();
+		this.scaled          = [
 			vec3.create(),
 			vec3.create(),
 			vec3.create()
@@ -29,10 +32,17 @@ class Renderer {
 			vec3.create()
 		];
 
+		this.pixelColor   = vec3.create();
+		this.ambientColor = vec3.create();
+
 		this.targetTriangle = [];
 
+		this.weightedDirLight = vec3.create();
+		this.ambientPlusDir = vec3.create();
 		this.vectorSum1 = vec3.create();
 		this.vectorSum2 = vec3.create();
+
+		this.normalizedNormal = vec3.create();
 	}
 
 	addObject(object) {
@@ -43,12 +53,15 @@ class Renderer {
 
 		this.registeredObjects.push(object);
 		this.transformedVertexPositions[objIndex] = [];
+		this.transformedNormals[objIndex]         = [];
 
 		for (i = 0; i < object.triangles.length; i++) {
 			vertices = object.triangles[i].vertices;
 			this.transformedVertexPositions[objIndex][i] = [];
+			this.transformedNormals[objIndex][i]         = [];
 			for (k = 0; k < 3; k++) {
 				this.transformedVertexPositions[objIndex][i][k] = vec3.create();
+				this.transformedNormals[objIndex][i][k]         = vec3.create();
 			}
 		}
 	}
@@ -59,17 +72,20 @@ class Renderer {
 		var numTriangles;
 		var triangles;
 		for (var i = 0; i < numObjects; i++) {
-			triangles        = this.registeredObjects[i].triangles;
-			numTriangles     = triangles.length;
-			mvMatrix         = this.registeredObjects[i].mvMatrix;
+			triangles    = this.registeredObjects[i].triangles;
+			numTriangles = triangles.length;
+			mvMatrix     = this.registeredObjects[i].mvMatrix;
 
-			mat4.multiply(this.multiplied, this.pMatrix, mvMatrix);
+			mat4.multiply(this.withPerspective, this.pMatrix, mvMatrix);
+			mat3.normalFromMat4(this.normalMatrix, mvMatrix);
+
 			for (var j = 0; j < numTriangles; j++) {
 				for (var k = 0; k < 3; k++) {
 					// i = object
 					// j = triangle
 					// k = vertex
-					vec3.transformMat4(this.transformedVertexPositions[i][j][k], triangles[j].vertices[k], this.multiplied);
+					vec3.transformMat3(this.transformedNormals[i][j][k], triangles[j].normals[k], this.normalMatrix);
+					vec3.transformMat4(this.transformedVertexPositions[i][j][k], triangles[j].vertices[k], this.withPerspective);
 				}
 			}
 		}
@@ -80,6 +96,7 @@ class Renderer {
 
 		var color;
 		var triangle;
+		var normal;
 		for (var i = 0; i < this.height; i++) {
 			for (var j = 0; j < this.width; j++) {
 				this.pixelPos[0] = (j - this.width  * 0.5)  / this.width;
@@ -88,7 +105,20 @@ class Renderer {
 				triangle = this.getTriangleAtPixel();
 
 				if(triangle){
-					color = this.getInterpolatedValue('colors', this.targetTriangle);
+					// color = this.getInterpolatedValue('colors', this.targetTriangle);
+					// this.setPixel(j, i, color[0], color[1], color[2], 255);
+
+					// normal = this.getInterpolatedValue('normals', this.targetTriangle);
+					normal = this.getInterpolatedValue(
+						'normals',
+						this.targetTriangle,
+						this.transformedNormals[this.targetTriangle[0]][this.targetTriangle[1]]
+					);
+					color  = this.addLighting(
+						normal,
+						vec3.set(this.pixelColor, 255, 255, 255)
+					);
+
 					this.setPixel(j, i, color[0], color[1], color[2], 255);
 				}
 				else {
@@ -100,8 +130,7 @@ class Renderer {
 		this.context.putImageData(this.imageData, 0, 0);
 	}
 
-	getInterpolatedValue(attribute, triangleIndex) {
-		var triangle         = this.registeredObjects[triangleIndex[0]].triangles[triangleIndex[1]];
+	getInterpolatedValue(attribute, triangleIndex, attributeLocation) {
 		var triangleVertices = this.transformedVertexPositions[triangleIndex[0]][triangleIndex[1]];
 
 		var distance0 = vec2.distance(this.pixelPos, triangleVertices[0]),
@@ -112,11 +141,10 @@ class Renderer {
 		this.weight0 = (1/ distance0) / sum;
 		this.weight1 = (1/ distance1) / sum;
 		this.weight2 = (1/ distance2) / sum;
-		// if(this.pixelPos[0] === 0.48 && this.pixelPos[1] === -0.48) debugger;
 
-		vec3.scale(this.scaled[0], triangle[attribute][0], this.weight0);
-		vec3.scale(this.scaled[1], triangle[attribute][1], this.weight1);
-		vec3.scale(this.scaled[2], triangle[attribute][2], this.weight2);
+		vec3.scale(this.scaled[0], attributeLocation[0], this.weight0);
+		vec3.scale(this.scaled[1], attributeLocation[1], this.weight1);
+		vec3.scale(this.scaled[2], attributeLocation[2], this.weight2);
 
 		return vec3.add(this.summed[0], this.scaled[0], vec3.add(this.summed[1], this.scaled[1], this.scaled[2]));
 	}
@@ -159,14 +187,31 @@ class Renderer {
 						triangleFound          = true;
 						this.targetTriangle[0] = i;
 						this.targetTriangle[1] = j;
-						// foremostTriangle = this.registeredObjects[i].triangles[j];
-						// foremostTriangle = [i, j];
 					}
 				}
 			}
 		}
 
 		return triangleFound;
+	}
+
+	addLighting(normal, color) {
+		vec3.normalize(this.normalizedNormal, normal);
+
+		var dirLightWeighting = 0;
+		for (var i = 0; i < this.directionalLights.length; i++) {
+			dirLightWeighting += Math.max(vec3.dot(this.normalizedNormal, this.directionalLights[i]), 0.0);
+		}
+		var sum = vec3.add(this.ambientPlusDir, this.ambientColor, vec3.scale(this.weightedDirLight, color, dirLightWeighting));
+		return sum;
+	}
+
+	setAmbientColor(r, g, b) {
+		this.ambientColor = vec3.set(this.ambientColor, r, g, b);
+	}
+
+	addDirectionalLight(x, y, z) {
+		this.directionalLights.push(vec3.set(vec3.create(), x, y, z));
 	}
 
 	sign(p1, p2, p3) {
